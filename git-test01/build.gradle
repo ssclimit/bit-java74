@@ -1,0 +1,42 @@
+//자바 기본 플러그인
+apply plugin:'java'
+//웹 프로젝트를 위한 플러그인
+apply plugin:'eclipse-wtp'
+apply plugin:'war'
+
+compileJava{
+ options.encoding = 'utf-8' // 소스파일 인코딩
+ sourceCompatibility = 1.8 //문법 검사할때 자바 버전
+}
+
+eclipse {
+ wtp{
+  facet {
+  	facet name : 'jst.web', version:'3.0'
+  	facet name : 'jst.java', version:'1.8'
+  }
+ }
+}
+
+
+//의존 라이브러리 다운로드 받을 서버 설정
+repositories{
+//메이븐 서버 지정
+mavenCentral()
+}
+//다운로드 받을 의존 라이브러리 지정
+//mvnrepository.com
+dependencies{
+//의존 라이브러리 지정
+compile 'org.springframework:spring-webmvc:4.2.2.RELEASE'
+compile 'org.mybatis:mybatis:3.3.0'
+compile 'org.mybatis:mybatis-spring:1.2.3'
+compile 'org.springframework:spring-jdbc:4.2.2.RELEASE'
+compile 'org.aspectj:aspectjweaver:1.8.7'
+compile 'com.google.code.gson:gson:2.4'
+compile 'com.fasterxml.jackson.core:jackson-databind:2.6.3'
+compile 'javax.servlet:jstl:1.2'
+providedCompile 'javax.servlet:javax.servlet-api:3.0.1' // 빌드에서만 사용하고 배포하지 않는 라이브러리  providedCompile
+//로컬파일 추가
+runtime fileTree(dir:'lib', include : '*.jar') // gradle dependencies local file
+}
